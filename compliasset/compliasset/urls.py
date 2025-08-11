@@ -19,9 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # We include our core.urls under 'accounts/' now for signup
-    path('accounts/', include('core.urls')), 
-    # Django's built-in auth urls (for login, logout, password management)
-    path('accounts/', include('django.contrib.auth.urls')), 
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('core.urls')),
 ]
