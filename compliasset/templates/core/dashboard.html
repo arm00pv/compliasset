@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% if has_business %} - {{ business.name }}{% endif %}{% endblock %}
+
+{% block content %}
+    {% if has_business %}
+        <h1 class="mb-4">Dashboard for {{ business.name }}</h1>
+
+        <div class="row">
+            <!-- Overdue Tasks Column -->
+            <div class="col-md-6">
+                <div class="card border-danger mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h3><i class="bi bi-x-circle-fill"></i> Overdue Tasks</h3>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for task in overdue_tasks %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <strong>{{ task.title }}</strong> for {{ task.asset.name }}
+                                <br>
+                                <small class="text-muted">Location: {{ task.asset.location.address }}</small>
+                                <br>
+                                <small class="text-danger">Due: {{ task.next_due_date }}</small>
+                            </a>
+                        {% empty %}
+                            <li class="list-group-item">No overdue tasks. Great job!</li>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- Upcoming Tasks Column -->
+            <div class="col-md-6">
+                <div class="card border-warning mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h3><i class="bi bi-clock-fill"></i> Upcoming Tasks</h3>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for task in upcoming_tasks %}
+                             <a href="#" class="list-group-item list-group-item-action">
+                                <strong>{{ task.title }}</strong> for {{ task.asset.name }}
+                                <br>
+                                <small class="text-muted">Location: {{ task.asset.location.address }}</small>
+                                <br>
+                                <small>Due: {{ task.next_due_date }}</small>
+                            </a>
+                        {% empty %}
+                            <li class="list-group-item">No upcoming tasks.</li>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <h2>Welcome!</h2>
+            <p>You have successfully logged in, but you haven't set up a business profile yet. Please use the admin panel to create your business profile and associate it with your user account.</p>
+        </div>
+    {% endif %}
+{% endblock %}
